@@ -116,6 +116,7 @@ public class USACO{
     return 0;
   }
 
+  //auxiliary function used to return output of silver
   public static int silver_output(String filename) throws FileNotFoundException{
     File f = new File(filename);
     Scanner info = new Scanner(f);
@@ -124,7 +125,7 @@ public class USACO{
 
   public static void main(String[] args) {
     try{
-      System.out.println("BRONZE TESTING");
+      System.out.println("----------Bronze-----------");
       for (int i = 1; i < 6; i++){
         int input = bronze("makelake." + i + ".in");
         //System.out.println(input);
@@ -139,7 +140,7 @@ public class USACO{
     }
 
     try{
-      System.out.println("SILVER TESTING");
+      System.out.println("----------Silver-----------");
       for (int i = 1; i < 6; i++){
         int input = silver("ctravel." + i + ".in");
         //System.out.println(input);
