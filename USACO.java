@@ -96,47 +96,44 @@ public class USACO{
     }
 
     String[] lastline = info.nextLine().split(" "); //splits lastline
-    int R1 = Integer.parseInt(lastline[0]); //records R1
-    int C1 = Integer.parseInt(lastline[1]); //records C1
-    int R2 = Integer.parseInt(lastline[2]); //records R2
-    int C2 = Integer.parseInt(lastline[3]); //records C2
+    int R1 = Integer.parseInt(lastline[0]) - 1; //records R1
+    int C1 = Integer.parseInt(lastline[1]) - 1; //records C1
+    int R2 = Integer.parseInt(lastline[2]) - 1; //records R2
+    int C2 = Integer.parseInt(lastline[3]) - 1; //records C2
 
     land[R1][C1] = 1; //sets R1, C1 to 1 and then runs fill board
-    //print statement or debugging purposes
+
     /*
-    String output = "";
-    for (int r = 0; r < R; r++){
-      for (int c = 0; c < C; c++){
-        if (land[r][c] == -1) output += "* ";
-        else output += land[r][c] + " ";
-      }
-      output += "\n";
+    for (int i = 0; i < land.length; i++){
+      System.out.println(Arrays.toString(land[i])); //debugging purposes
     }
-    System.out.println(output);
     */
 
-    return land[R2 - 1][C2 - 1];
+    return fillboard(land, T)[R2][C2];
   }
 
   //helper function used to calculate the number of ways each square can be reached given a certain number of moves
   public static int[][] fillboard(int[][] land, int T){
-    int[][] temp_land = land; //sets up temporary array storage
-    int[][] moves = {{0,1},{1,0},{0,-1},{-1,0}}; //list of moves
-    while (T > 0){ //while there is still time left
-      for (int r = 0; r < land.length; r++){ //loops through array
+    int[][] sum_land = land;
+    int[][] moves = {{0,1},{0,-1},{1,0},{-1,0}};
+
+    for (int x = 0; x < T; x++){
+      for (int r = 0; r < land.length; r++){
         for (int c = 0; c < land[0].length; c++){
-          int temp = 0; //temporary storage for value of position
-          for (int i = 0; i < moves.length; i++){ //loops through moves
-            int newR = i + moves[i][0];
-            int newC = i + moves[i][1];
-            if (!outOfBounds(land, newR, newC)) temp += land[newR][newC]; //add sum of neighbors
+          if (land[r][c] != -1){
+            int temp = 0;
+            for (int i = 0; i < moves.length; i++){
+              if (!outOfBounds(land, r + moves[i][0], c + moves[i][1])) temp += land[r + moves[i][0]][c + moves[i][1]];
+            }
+            sum_land[r][c] = temp;
+          }
         }
-        temp_land[r][c] = temp; //set self to sum of neighbors
       }
-      }
-      T--;
     }
-    return temp_land; //return temporary array 
+    for (int i = 0; i < land.length; i++){
+      System.out.println(Arrays.toString(sum_land[i])); //debugging purposes
+    }
+    return sum_land;
   }
 
   public static boolean outOfBounds(int[][] land, int row, int col){
@@ -168,7 +165,7 @@ public class USACO{
 
     try{
       System.out.println("----------Silver-----------");
-      for (int i = 1; i < 6; i++){
+      for (int i = 1; i < 2; i++){
         int input = silver("ctravel." + i + ".in");
         //System.out.println(input);
         int output = silver_output("ctravel." + i + ".out");
