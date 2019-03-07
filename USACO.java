@@ -91,20 +91,9 @@ public class USACO{
       String temp = info.nextLine(); //reads in next line
       for (int j = 0; j < C; j++){
         if (temp.charAt(j) == '*') land[i][j] = -1; //adds in information from file into array
+        //trees are denoted by -1
       }
     }
-
-    //print statement or debugging purposes
-    /*
-    String output = "";
-    for (int r = 0; r < R; r++){
-      for (int c = 0; c < C; c++){
-        output += land[r][c];
-      }
-      output += "\n";
-    }
-    System.out.println(output);
-    */
 
     String[] lastline = info.nextLine().split(" "); //splits lastline
     int R1 = Integer.parseInt(lastline[0]); //records R1
@@ -112,24 +101,36 @@ public class USACO{
     int R2 = Integer.parseInt(lastline[2]); //records R2
     int C2 = Integer.parseInt(lastline[3]); //records C2
 
+    fillboard(land, T, R1 - 1, C1 - 1);
 
-    return 0;
+    //print statement or debugging purposes
+    String output = "";
+    for (int r = 0; r < R; r++){
+      for (int c = 0; c < C; c++){
+        if (land[r][c] == -1) output += "* ";
+        else output += land[r][c] + " ";
+      }
+      output += "\n";
+    }
+    System.out.println(output);
+
+    return land[R2 - 1][C2 - 1];
   }
 
   //helper function used to calculate the number of ways each square can be reached given a certain number of moves
   public static void fillboard(int[][] land, int T, int R1, int C1){
-    land[R1][C1] = 1;
-    for (int i = 1; i < T; i++){
-      if (!outOfBounds(land, R1 + 1, C1)) land[R1+1][C1]++; //check for valid move to the right
-      if (!outOfBounds(land, R1 - 1, C1)) land[R1-1][C1]++; //check for valid move to the left
-      if (!outOfBounds(land, R1, C1 + 1)) land[R1][C1+1]++; //check for valid move up
-      if (!outOfBounds(land, R1, C1 - 1)) land[R1][C1-1]++; //check for valid move down
-      land[R1][C1] = 0;
+    land[R1][C1]++;
+    if (T > 0){
+      land[R1][C1] = 0; //spot you are at changes to 0
+      if (!outOfBounds(land, R1 + 1, C1)) fillboard(land, T - 1, R1 + 1, C1); //check for valid move to the right
+      if (!outOfBounds(land, R1 - 1, C1)) fillboard(land, T - 1, R1 - 1, C1); //check for valid move to the left
+      if (!outOfBounds(land, R1, C1 + 1)) fillboard(land, T - 1, R1, C1 + 1); //check for valid move up
+      if (!outOfBounds(land, R1, C1 - 1)) fillboard(land, T - 1, R1, C1 - 1); //check for valid move down
     }
   }
 
   public static boolean outOfBounds(int[][] land, int row, int col){
-    return row < 0 || row >= land.length || col < 0 || col >= land[0].length || land[row][col] == -1;
+    return row < 0 || row >= land.length || col < 0 || col >= land[0].length || land[row][col] == -1; //check if out of bounds of if tree present
   }
 
   //auxiliary function used to return output of silver
@@ -161,6 +162,7 @@ public class USACO{
         int input = silver("ctravel." + i + ".in");
         //System.out.println(input);
         int output = silver_output("ctravel." + i + ".out");
+        //System.out.println(output);
         if (input == output) System.out.println("Test " + i + ": PASSED");
         else System.out.println("Test " + i + ": FAILED");
       }
