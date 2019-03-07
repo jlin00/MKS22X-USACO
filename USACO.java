@@ -51,14 +51,24 @@ public class USACO{
 
     for (int i = 0; i < 3; i++){
       for (int j = 0; j < 3; j++){
-        if (land[i][j] > max) land[i][j] = max; //stomps down land 
+        if (land[i][j] > max) land[i][j] = max; //stomps down land
       }
     }
 
   }
 
   public static int calcWater(int[][] land, int elevation){
-    return 0;
+    int output = 0;
+    for (int i = 0; i < land.length; i++){
+      for (int j = 0; j < land[0].length; j++){
+        if (land[i][j] > elevation) land[i][j] = 0; //if higher than water level, no water is present
+        else {
+          land[i][j] = elevation - land[i][j]; //if lower than water level, calculate depth
+          output += land[i][j];
+        }
+      }
+    }
+    return output;
   }
 
   public static int silver(String filename){
