@@ -117,8 +117,15 @@ public class USACO{
   }
 
   //helper function used to calculate the number of ways each square can be reached given a certain number of moves
-  public static void fillboard(int[][] land, int moves){
-
+  public static void fillboard(int[][] land, int T, int R1, int C1){
+    land[R1][C1] = 1;
+    for (int i = 1; i < T; i++){
+      if (!outOfBounds(land, R1 + 1, C1)) land[R1+1][C1]++; //check for valid move to the right
+      if (!outOfBounds(land, R1 - 1, C1)) land[R1-1][C1]++; //check for valid move to the left
+      if (!outOfBounds(land, R1, C1 + 1)) land[R1][C1+1]++; //check for valid move up
+      if (!outOfBounds(land, R1, C1 - 1)) land[R1][C1-1]++; //check for valid move down
+      land[R1][C1] = 0;
+    }
   }
 
   public static boolean outOfBounds(int[][] land, int row, int col){
