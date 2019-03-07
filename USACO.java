@@ -41,6 +41,19 @@ public class USACO{
   }
 
   public static void stomp(int[][] land, int row, int col, int delta){
+    int max = land[row][col];
+    for (int i = 0; i < 3; i++){
+      for (int j = 0; j < 3; j++){
+        if (land[i][j] > max) max = land[i][j]; //find max of the stomping area
+      }
+    }
+    max -= delta; //adjusts elevation according to command
+
+    for (int i = 0; i < 3; i++){
+      for (int j = 0; j < 3; j++){
+        if (land[i][j] > max) land[i][j] = max; //stomps down land 
+      }
+    }
 
   }
 
