@@ -37,38 +37,44 @@ public class USACO{
       stomp(land, Integer.parseInt(temp[0]) - 1, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2])); //calls helper function to stomp land according to commands
     }
 
-    return 0;
+    return calcWater(land, E) * 72 * 72; //returns depth of water times area of square
   }
 
   public static void stomp(int[][] land, int row, int col, int delta){
     int max = land[row][col];
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++){ //loops through 3 by 3 area
       for (int j = 0; j < 3; j++){
-        if (land[i][j] > max) max = land[i][j]; //find max of the stomping area
+        if (land[row + i][col + j] > max) max = land[row + i][col + j]; //find max of the stomping area
       }
     }
     max -= delta; //adjusts elevation according to command
 
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++){ //loops through 3 by 3 area
       for (int j = 0; j < 3; j++){
-        if (land[i][j] > max) land[i][j] = max; //stomps down land
+        if (land[row + i][col + j] > max) land[row + i][col + j] = max; //stomps down land
       }
     }
-
   }
 
   public static int calcWater(int[][] land, int elevation){
     int output = 0;
-    for (int i = 0; i < land.length; i++){
+    for (int i = 0; i < land.length; i++){ //loops through entire array
       for (int j = 0; j < land[0].length; j++){
         if (land[i][j] > elevation) land[i][j] = 0; //if higher than water level, no water is present
         else {
           land[i][j] = elevation - land[i][j]; //if lower than water level, calculate depth
-          output += land[i][j];
+          output += land[i][j]; //add to output
         }
       }
     }
     return output;
+  }
+
+  //auxiliary function used to return output of bronze
+  public static int bronze_output(String filename) throws FileNotFoundException{
+    File f = new File(filename);
+    Scanner info = new Scanner(f);
+    return Integer.parseInt(info.nextLine());
   }
 
   public static int silver(String filename){
@@ -77,7 +83,13 @@ public class USACO{
 
   public static void main(String[] args) {
     try{
-      System.out.println(bronze("makelake.1.in"));
+      for (int i = 1; i < 6; i++){
+        int input = bronze("makelake." + i + ".in");
+        System.out.println(input);
+        int output = bronze_output("makelake." + i + ".out");
+        if (input == output) System.out.println("Test " + i + ": PASSED");
+        else System.out.println("Test " + i + ": FAILED");
+      }
     }
     catch (FileNotFoundException e){
       System.out.println("File not found");
