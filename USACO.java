@@ -88,7 +88,7 @@ public class USACO{
 
     char[][] land = new char[R][C]; //initializes new array
     for (int i = 0; i < R; i++){ //loops through array
-      String temp = info.nextLine(); //reads in next line 
+      String temp = info.nextLine(); //reads in next line
       for (int j = 0; j < C; j++){
         land[i][j] = temp.charAt(j); //adds in information from file into array
       }
@@ -116,8 +116,15 @@ public class USACO{
     return 0;
   }
 
+  public static int silver_output(String filename) throws FileNotFoundException{
+    File f = new File(filename);
+    Scanner info = new Scanner(f);
+    return Integer.parseInt(info.nextLine());
+  }
+
   public static void main(String[] args) {
     try{
+      System.out.println("BRONZE TESTING");
       for (int i = 1; i < 6; i++){
         int input = bronze("makelake." + i + ".in");
         //System.out.println(input);
@@ -125,13 +132,21 @@ public class USACO{
         if (input == output) System.out.println("Test " + i + ": PASSED");
         else System.out.println("Test " + i + ": FAILED");
       }
+      System.out.println();
     }
     catch (FileNotFoundException e){
       System.out.println("File not found");
     }
 
     try{
-      System.out.println(silver("ctravel.1.in"));
+      System.out.println("SILVER TESTING");
+      for (int i = 1; i < 6; i++){
+        int input = silver("ctravel." + i + ".in");
+        //System.out.println(input);
+        int output = silver_output("ctravel." + i + ".out");
+        if (input == output) System.out.println("Test " + i + ": PASSED");
+        else System.out.println("Test " + i + ": FAILED");
+      }
     }
     catch (FileNotFoundException e){
       System.out.println("File not found");
