@@ -86,13 +86,25 @@ public class USACO{
     int C = Integer.parseInt(firstline[1]); //records col
     int T = Integer.parseInt(firstline[2]); //records time in seconds
 
-    String[][] land = new String[R][C]; //initializes new array
+    char[][] land = new char[R][C]; //initializes new array
     for (int i = 0; i < R; i++){ //loops through array
-      String[] temp = info.nextLine().split(" "); //reads in from file
+      String temp = info.nextLine(); //reads in next line 
       for (int j = 0; j < C; j++){
-        land[i][j] = temp[j]; //adds in information from file into array
+        land[i][j] = temp.charAt(j); //adds in information from file into array
       }
     }
+
+    //print statement or debugging purposes
+    /*
+    String output = "";
+    for (int r = 0; r < R; r++){
+      for (int c = 0; c < C; c++){
+        output += land[r][c];
+      }
+      output += "\n";
+    }
+    System.out.println(output);
+    */
 
     String[] lastline = info.nextLine().split(" "); //splits lastline
     int R1 = Integer.parseInt(lastline[0]); //records R1
@@ -100,7 +112,7 @@ public class USACO{
     int R2 = Integer.parseInt(lastline[2]); //records R2
     int C2 = Integer.parseInt(lastline[3]); //records C2
 
-    
+
     return 0;
   }
 
@@ -113,6 +125,13 @@ public class USACO{
         if (input == output) System.out.println("Test " + i + ": PASSED");
         else System.out.println("Test " + i + ": FAILED");
       }
+    }
+    catch (FileNotFoundException e){
+      System.out.println("File not found");
+    }
+
+    try{
+      System.out.println(silver("ctravel.1.in"));
     }
     catch (FileNotFoundException e){
       System.out.println("File not found");
