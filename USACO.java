@@ -116,6 +116,15 @@ public class USACO{
     return 0;
   }
 
+  //helper function used to calculate the number of ways each square can be reached given a certain number of moves
+  public static void fillboard(int[][] land, int moves){
+
+  }
+
+  public static boolean outOfBounds(int[][] land, int row, int col){
+    return row < 0 || row >= land.length || col < 0 || col >= land[0].length;
+  }
+
   //auxiliary function used to return output of silver
   public static int silver_output(String filename) throws FileNotFoundException{
     File f = new File(filename);
