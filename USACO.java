@@ -77,7 +77,30 @@ public class USACO{
     return Integer.parseInt(info.nextLine());
   }
 
-  public static int silver(String filename){
+  public static int silver(String filename) throws FileNotFoundException{
+    File f = new File(filename); //reads in file
+    Scanner info = new Scanner(f);
+
+    String[] firstline = info.nextLine().split(" "); //splits first line
+    int R = Integer.parseInt(firstline[0]); //records row
+    int C = Integer.parseInt(firstline[1]); //records col
+    int T = Integer.parseInt(firstline[2]); //records time in seconds
+
+    String[][] land = new String[R][C]; //initializes new array
+    for (int i = 0; i < R; i++){ //loops through array
+      String[] temp = info.nextLine().split(" "); //reads in from file
+      for (int j = 0; j < C; j++){
+        land[i][j] = temp[j]; //adds in information from file into array
+      }
+    }
+
+    String[] lastline = info.nextLine().split(" "); //splits lastline
+    int R1 = Integer.parseInt(lastline[0]); //records R1
+    int C1 = Integer.parseInt(lastline[1]); //records C1
+    int R2 = Integer.parseInt(lastline[2]); //records R2
+    int C2 = Integer.parseInt(lastline[3]); //records C2
+
+    
     return 0;
   }
 
@@ -85,7 +108,7 @@ public class USACO{
     try{
       for (int i = 1; i < 6; i++){
         int input = bronze("makelake." + i + ".in");
-        System.out.println(input);
+        //System.out.println(input);
         int output = bronze_output("makelake." + i + ".out");
         if (input == output) System.out.println("Test " + i + ": PASSED");
         else System.out.println("Test " + i + ": FAILED");
