@@ -101,9 +101,9 @@ public class USACO{
     int R2 = Integer.parseInt(lastline[2]); //records R2
     int C2 = Integer.parseInt(lastline[3]); //records C2
 
-    fillboard(land, T, R1 - 1, C1 - 1);
-
+    land[R1][C1] = 1; //sets R1, C1 to 1 and then runs fill board
     //print statement or debugging purposes
+    /*
     String output = "";
     for (int r = 0; r < R; r++){
       for (int c = 0; c < C; c++){
@@ -113,20 +113,30 @@ public class USACO{
       output += "\n";
     }
     System.out.println(output);
+    */
 
     return land[R2 - 1][C2 - 1];
   }
 
   //helper function used to calculate the number of ways each square can be reached given a certain number of moves
-  public static void fillboard(int[][] land, int T, int R1, int C1){
-    land[R1][C1]++;
-    if (T > 0){
-      land[R1][C1] = 0; //spot you are at changes to 0
-      if (!outOfBounds(land, R1 + 1, C1)) fillboard(land, T - 1, R1 + 1, C1); //check for valid move to the right
-      if (!outOfBounds(land, R1 - 1, C1)) fillboard(land, T - 1, R1 - 1, C1); //check for valid move to the left
-      if (!outOfBounds(land, R1, C1 + 1)) fillboard(land, T - 1, R1, C1 + 1); //check for valid move up
-      if (!outOfBounds(land, R1, C1 - 1)) fillboard(land, T - 1, R1, C1 - 1); //check for valid move down
+  public static int[][] fillboard(int[][] land, int T){
+    int[][] temp_land = land; //sets up temporary array storage
+    int[][] moves = {{0,1},{1,0},{0,-1},{-1,0}}; //list of moves
+    while (T > 0){ //while there is still time left
+      for (int r = 0; r < land.length; r++){ //loops through array
+        for (int c = 0; c < land[0].length; c++){
+          int temp = 0; //temporary storage for value of position
+          for (int i = 0; i < moves.length; i++){ //loops through moves
+            int newR = i + moves[i][0];
+            int newC = i + moves[i][1];
+            if (!outOfBounds(land, newR, newC)) temp += land[newR][newC]; //add sum of neighbors
+        }
+        temp_land[r][c] = temp; //set self to sum of neighbors
+      }
+      }
+      T--;
     }
+    return temp_land; //return temporary array 
   }
 
   public static boolean outOfBounds(int[][] land, int row, int col){
