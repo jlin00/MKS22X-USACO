@@ -86,11 +86,11 @@ public class USACO{
     int C = Integer.parseInt(firstline[1]); //records col
     int T = Integer.parseInt(firstline[2]); //records time in seconds
 
-    char[][] land = new char[R][C]; //initializes new array
+    int[][] land = new int[R][C]; //initializes new array
     for (int i = 0; i < R; i++){ //loops through array
       String temp = info.nextLine(); //reads in next line
       for (int j = 0; j < C; j++){
-        land[i][j] = temp.charAt(j); //adds in information from file into array
+        if (temp.charAt(j) == '*') land[i][j] = -1; //adds in information from file into array
       }
     }
 
@@ -122,7 +122,7 @@ public class USACO{
   }
 
   public static boolean outOfBounds(int[][] land, int row, int col){
-    return row < 0 || row >= land.length || col < 0 || col >= land[0].length;
+    return row < 0 || row >= land.length || col < 0 || col >= land[0].length || land[row][col] == -1;
   }
 
   //auxiliary function used to return output of silver
