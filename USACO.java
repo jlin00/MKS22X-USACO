@@ -6,24 +6,17 @@ public class USACO{
   public static int bronze(String filename) throws FileNotFoundException{
     File f = new File(filename); //reads in file
     Scanner info = new Scanner(f);
-    List<String> lines = new ArrayList<String>();
 
-    while (info.hasNextLine()){ //adds lines from file into Arraylist
-      lines.add(info.nextLine());
-    }
+    String[] firstline = info.nextLine().split(" "); //split the first line and store values
+    int R = Integer.parseInt(firstline[0]); //stores row
+    int C = Integer.parseInt(firstline[1]); //stores col
+    int E = Integer.parseInt(firstline[2]); //stores elevation
 
-    String[] firstline = lines.get(0).split(" "); //split the first line and store values
-    int R = Integer.parseInt(firstline[0]);
-    int C = Integer.parseInt(firstline[1]);
-    int E = Integer.parseInt(firstline[2]);
-    int N = Integer.parseInt(firstline[3]);
-
-    int[][] land = new int[R][C];
-    String[] temp; //temporary storage for line
-    for (int i = 1; i <= R; i++){
-      temp = lines.get(i).split(" "); //split the line
+    int[][] land = new int[R][C]; //initialize array for land
+    for (int i = 0; i < R; i++){
+      String[] temp = info.nextLine().split(" ");
       for (int j = 0; j < C; j++){
-        land[i-1][j] = Integer.parseInt(temp[j]); //add each number to array 
+        land[i][j] = Integer.parseInt(temp[j]); //add each number to array
       }
     }
 
@@ -39,7 +32,16 @@ public class USACO{
     System.out.println(output);
     */
 
+    while (info.hasNextLine()){
+      String[] temp = info.nextLine().split(" ");
+      stomp(land, Integer.parseInt(temp[0]) - 1, Integer.parseInt(temp[1]) - 1, Integer.parseInt(temp[2])); //calls helper function to stomp land according to commands
+    }
+
     return 0;
+  }
+
+  public static void stomp(int[][] land, int row, int col, int delta){
+
   }
 
   public static int silver(String filename){
